@@ -1,0 +1,46 @@
+create table marks(
+	rm int,
+	);
+insert into marks values(90),(95),(90),(90),(90),(85),(85),(70),(60);
+select*from marks;
+
+//rank
+select rm ,rank()over( order by rm desc)rank
+from marks
+order by rm desc;
+
+//dense_rank
+
+select rm ,dense_rank()over( order by rm desc)rank
+from marks
+order by rm desc;
+
+//nitle
+
+select rm ,ntile(3)over( order by rm desc)rank
+from marks
+order by rm desc;
+
+//row number
+
+select rm ,row_number()over( order by rm desc)rank
+from marks
+order by rm desc;
+
+case statement 
+create table number(
+	num int,
+);
+insert into number values(100);
+select * from number;
+SELECT num, 
+       CASE 
+          WHEN num<200 THEN '100 is smaller'
+          WHEN num<200 THEN '100 is greater'
+          ELSE 'equal'
+       END AS value1
+FROM number;
+.
+
+
+

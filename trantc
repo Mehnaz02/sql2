@@ -1,0 +1,151 @@
+create table Order_table(
+	order_id int,
+	order_date date,
+	amount int,
+	customer_id int
+	);
+
+insert into Customers values
+(101,'mehnaz','mehnaz@gmail.com'),
+(102,'alqama','alqama@gmail.com'),
+(103,'priya','priya@gmail.com'),
+(104,'abhinav','abhinav@gmail.com'),
+(105,'sinu','sinu@gmail.com');
+insert into Customers values(null,'m',null);
+
+create table Order_table(
+	order_id int,
+	order_date date,
+	amount int,
+	customer_id int
+	);
+
+insert into Order_table values
+(1,'2022-01-01',100,101),
+(2,'2022-01-13',75,102),
+(3,'2022-01-05',50,103),
+(4,'2022-01-07',200,101),
+(5,'2022-01-10',125,104);
+insert into Order_table values(null,null,50,106);
+
+//transaction in sql
+
+begin transaction 
+	update Order_table set amount=200 where customer_id=101;
+	commit transaction 
+	// rollback transaction
+select * from Order_table;
+
+
+begin try
+	begin transaction
+	update customers set customer_id=100 where customer_name='mehnaz';
+	update customers set customer_id=101/0 where customer_id=100 ;
+	commit transaction 
+	print 'transaction sucessfull'
+end try
+begin catch
+	begin transaction
+	rollback transaction
+	print 'transaction rollback'
+end catch
+
+//exception handling
+
+declare @var1 int 
+declare @var2 int
+
+begin try 
+set var1=8
+set var2=var1/0
+end try
+begin catch 
+print error_message()
+end catch
+
+begin try
+select customer_id+customer_name from customers
+end try
+begin catch
+	print'cant add numerical with string'
+end catch
+
+//try and catch
+
+begin try
+	print ' i am at 1'
+	select 1/0
+end try
+begin catch
+	select
+		error_message()as Errrormessage,
+		error_severity() as ErrorSev,
+		error_state() as Errorstate,
+		error_procedure() as ErrorProcedure,
+		error_line() as ErrorLine,
+		error_number() as errornumber;
+		print 'i am level 2'
+end catch
+
+
+//udf(user define function)
+
+create function fun_name(@a as int,@b as int)
+returns int
+as 
+begin 
+declare @results as int
+set @results=@a+@b
+return @return
+end
+select fun_name(2,3)
+
+// from order table
+
+create function fun_name(@a as int,@b as int)
+returns int
+as 
+begin 
+declare @results as int
+set @results=@a+@b
+return @results
+end
+
+select dbo.fun_name(2,3)
+
+select * from Order_table; 
+
+select * ,dbo.fun_name(order_id,amount)
+from Order_table;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

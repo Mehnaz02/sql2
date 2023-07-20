@@ -1,0 +1,205 @@
+create table details(
+	name varchar(20),
+	subject varchar(20),
+	marks int
+	)
+
+insert into details values('mehnaz','geography',90),('alqama','computers',80),('alqama'geography',80),('alqama',physics',70),('mehnaz','physics',60),('mehnaz','computer',80),('alqama','hindi',50),('mehnaz','hindi',40),('priya','geography',90),('priya','hindi',80),('priya','physics',70),('priya','computer',80);
+
+//pivot
+
+select * from details
+
+pivot(
+	sum([marks])
+	for [subject]
+	in (
+	[hindi],[physics],[computer],[geography]
+	)
+	
+)AS temp
+
+//pivot with primary key
+
+select * from 
+(select you shouldn't add any primary colums in this statement, others columns from details) resultset
+
+pivot(
+	sum([marks])
+	for [subject]
+	in (
+	[hindi],[physics],[computer],[geography]
+	)
+	
+)AS temp
+
+---from studies table [pivot]
+---sum of course_fee according to each institue.
+
+
+select * from 
+(select  course_fee,institue from studies) as resulr
+pivot(
+	sum([course_fee])
+	for [institue]
+	in
+	([sabhari],[coit],[bdps],[pragathi]
+	)
+)as tn
+
+---------------------------------------------------------
+change rows into one row
+
+create table number(
+	no varchar(20)
+	)
+insert into number values('first','second',third');
+	
+	
+	
+---------------------------------------------------------
+from software table
+
+select * from 
+(select distinct developin,sold,scost  from software) ps pivot(
+ count(sold) for developin in (cpp,basic,pascal,cobal,dbase,oracle,c,assembly))
+as pvt
+	
+	
+	
+	
+	
+	select 
+Role from GAMERS 
+pivot 
+(
+    
+    for
+    [Role]
+    in
+    ([Healer] as 'MIN(Healer)',[Attacker] as 'MIN(Attacker)',
+    [Defender] as 'MIN(Defender)',[Tactician] as 'MIN(Tactician)')
+)as c
+order by Player ;
+	
+	
+	
+	
+	
+-----------------------
+SELECT 
+    id,
+    Jan AS Jan_Revenue,
+    Feb AS Feb_Revenue, 
+    Mar AS Mar_Revenue, 
+    Apr AS Apr_Revenue,
+    May AS May_Revenue,
+    Jun AS Jun_Revenue,
+    Jul AS Jul_Revenue,
+    Aug AS Aug_Revenue,
+    Sep AS Sep_Revenue,
+    Oct AS Oct_Revenue,
+    Nov AS Nov_Revenue,
+    Dec AS Dec_Revenue
+FROM Department
+PIVOT 
+(
+    MAX(revenue)
+    FOR month IN (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)        
+) AS MonthsRevenue
+
+70
+70
+Previous
+MySQL Solution
+Next
+Simple MySQL Solution - No JOINS, No PIVOT Function
+Comments (8)
+trilobite2019
+Nov 03, 2019
+
+Great work! I found the pivot solution only works for SQL sever, not my SQL.
+12
+Reply
+yanshengjia
+Sep 22, 2019
+
+Can anyone tell me why we should use MAX in the group by solution?
+12
+Show 4 Replies
+Reply
+bukandu1
+Feb 12, 2022
+
+Can someone explain how the first solution works without any aggregating?
+1
+Show 2 Replies
+Reply
+Louisssss_s
+Jan 10, 2022
+
+hi Pivot table solution doesn't work
+1
+Show 2 Replies
+Reply
+HYSANG
+Apr 01, 2020
+
+SELECT id.id, Jan_Revenue, Feb_Revenue, Mar_Revenue, Apr_Revenue, May_Revenue, Jun_Revenue, 
+    Jul_Revenue, Aug_Revenue, Sep_Revenue, Oct_Revenue, Nov_Revenue, Dec_Revenue
+FROM (SELECT DISTINCT id FROM Department) id
+LEFT JOIN (SELECT id, revenue Jan_Revenue FROM Department WHERE month = 'Jan') jan USING(id)
+LEFT JOIN (SELECT id, revenue Feb_Revenue FROM Department WHERE month = 'Feb') feb USING(id)
+LEFT JOIN (SELECT id, revenue Mar_Revenue FROM Department WHERE month = 'Mar') mar USING(id)
+LEFT JOIN (SELECT id, revenue Apr_Revenue FROM Department WHERE month = 'Apr') apr USING(id)
+LEFT JOIN (SELECT id, revenue May_Revenue FROM Department WHERE month = 'May') may USING(id)
+LEFT JOIN (SELECT id, revenue Jun_Revenue FROM Department WHERE month = 'Jun') jun USING(id)
+LEFT JOIN (SELECT id, revenue Jul_Revenue FROM Department WHERE month = 'Jul') jul USING(id)
+LEFT JOIN (SELECT id, revenue Aug_Revenue FROM Department WHERE month = 'Aug') aug USING(id)
+LEFT JOIN (SELECT id, revenue Sep_Revenue FROM Department WHERE month = 'Sep') sep USING(id)
+LEFT JOIN (SELECT id, revenue Oct_Revenue FROM Department WHERE month = 'Oct') oct USING(id)
+LEFT JOIN (SELECT id, revenue Nov_Revenue FROM Department WHERE month = 'Nov') nov USING(id)
+LEFT JOIN (SELECT id, revenue Dec_Revenue FROM Department WHERE month = 'Dec') dee USING(id)
+
+Read more
+0
+Show 1 Replies
+Reply
+jackmtlee
+SQL I
+Apr 28, 2022
+
+An elegant solution!!!
+0
+Reply
+Llosia
+Sep 23, 2019
+
+Great works!
+0
+Reply
+shawlu
+Level 1
+Sep 16, 2019
+
+nice one
+0
+Show 1 Replies
+Reply
+Comments
+8
+Favorited
+0
+Views
+16.1K
+Back to top
+
+
+
+
+
+
+
+
+
+
